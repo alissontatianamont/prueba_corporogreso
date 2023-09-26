@@ -16,6 +16,11 @@ use App\Http\Controllers\Controller;  // Importar el controlador por defecto
 
 Route::get('/', function () {
     return view('welcome');
+})->name('welcome');
+
+Route::post('/usuarios', [Controller::class, 'uploadExcel'])->name('usuariosCrear');
+
+Route::get('/usuarios', function () {
+    return view('usuarios');
 });
 
-Route::post('/upload-excel', [Controller::class, 'uploadExcel'])->name('upload.excel');

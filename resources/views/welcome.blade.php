@@ -16,38 +16,41 @@
     <body class="antialiased">
         <section class="row">
             <div class="col-12">
+                <div>
+                    <span>Por favor, utilice la plantilla para ingresar los datos de sus usuarios</span>
+                    <a href="{{ asset('assets/excel/plantilla_usuarios.xlsx') }}" download class="btn btn-primary">Obtener plantilla</a>
+
+                </div>
                 <div class="form_excel text-center">
-                    <form action="{{ route('upload.excel') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('usuariosCrear') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <input type="file" name="file" required>
+                        <label for="archivo_excel">Elegir archivo Excel:</label>
+                        <input type="file" name="archivo_excel" id="archivo_excel" accept=".xls,.xlsx" required>
                         <button type="submit">Subir Archivo</button>
                     </form>
 
-                    @if(isset($data))
-                    <table>
-                        <thead>
-                            <tr>
-                                @foreach($data[0] as $key => $value)
-                                <th>{{ $key }}</th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($data as $row)
-                            <tr>
-                                @foreach($row as $key => $value)
-                                <td>{{ $value }}</td>
-                                @endforeach
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    @endif
+                                        @if(isset($data))
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>USERNAME</th>
+                                                    <th>EMAIL</th>
+                                                    <th>PASSWORD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($data as $row)
+                                                <tr>
+                                                    @foreach($row as $key => $value)
+                                                    <td>{{ $value }}</td>
+                                                    @endforeach
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        @endif
 
                 </div>
-            </div>
-            <div class="table_users">
-
             </div>
         </section>
         <section></section>

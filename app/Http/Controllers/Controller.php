@@ -13,15 +13,33 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function uploadExcel(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xls,xlsx'
-        ]);
+public function uploadExcel(Request $request)
+{
+    $request->validate([
+        'archivo_excel' => 'required|mimes:xls,xlsx'
+    ]);
 
-        $path = $request->file('file')->getRealPath();
-        $data = Excel::toArray(new class{}, $path);
+    $path = $request->file('archivo_excel')->getRealPath();
+    $data = Excel::toArray(new class{}, $path);
 
-        return view('welcome', ['data' => $data[0]]);
+    $requiredHeaders = ['USERNAME', 'EMAIL', 'PASSWORD'];
+    $filteredData = [];
+    
+    if (!empty($data) && !empty($data[0])) {
+        $headers = $data[0][0];
+        if (array_intersect($requiredHeaders, $headers) == $requiredHeaders) {
+            for ($i = 1; $i < count($data[0]); $i++) {
+                $filteredData[] = [
+                    'USERNAME' => $data[0][$i][array_search('USERNAME', $headers)] ?? null,
+                    'EMAIL' => $data[0][$i][array_search('EMAIL', $headers)] ?? null,
+                    'PASSWORD' => $data[0][$i][array_search('PASSWORD', $headers)] ?? null
+                ];
+            }
+        }
     }
+
+    return view('welcome', ['data' => $filteredData]);
+}
+
+
 }
