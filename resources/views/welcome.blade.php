@@ -17,12 +17,33 @@
         <section class="row">
             <div class="col-12">
                 <div class="form_excel text-center">
-                    <form  enctype="multipart/form-data">
-                        <label for="archivo_excel">Elegir archivo Excel:</label>
-                        <input type="file" name="archivo_excel" id="archivo_excel" accept=".xls,.xlsx" required>
-                        <br><br>
-                        <button type="submit" class="btn_primary">Subir Archivo</button>
+                    <form action="{{ route('upload.excel') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="file" required>
+                        <button type="submit">Subir Archivo</button>
                     </form>
+
+                    @if(isset($data))
+                    <table>
+                        <thead>
+                            <tr>
+                                @foreach($data[0] as $key => $value)
+                                <th>{{ $key }}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($data as $row)
+                            <tr>
+                                @foreach($row as $key => $value)
+                                <td>{{ $value }}</td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endif
+
                 </div>
             </div>
             <div class="table_users">
@@ -30,6 +51,7 @@
             </div>
         </section>
         <section></section>
+
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
