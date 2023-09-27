@@ -14,3 +14,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+const inputExcel = document.getElementById('archivo_excel');
+
+inputExcel.addEventListener('change', function() {
+    const file = this.files[0]; 
+
+    if (file) {
+      const fileSizeInMB = file.size / (1024 * 1024); 
+
+      if (fileSizeInMB >= 10) {  
+        alert("El archivo es demasiado grande. Por favor, elige un archivo de menos de 10 MB.");
+        this.value = "";  // Limpia el input
+      } 
+    }
+});
