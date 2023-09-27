@@ -49,6 +49,24 @@
                                             </tbody>
                                         </table>
                                         @endif
+                                        
+                                        
+                                        @if(isset($errors))
+
+                    <table>
+
+                        <thead>
+                            Errores
+                        </thead>
+
+                        <tbody>
+                            @foreach($errors as $error)
+                            Error: {{$error}} <br>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    @endif
 
                 </div>
             </div>
